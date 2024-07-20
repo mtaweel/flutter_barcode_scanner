@@ -263,7 +263,12 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
                 }
             }
         };
-        registerReceiver(finishBroadcast, new IntentFilter("closeScanner"));
+         if (Build.VERSION.SDK_INT >= 34) { // Android 14 (API level 34)
+        //  2 is for Context.RECEIVER_EXPORTED
+            registerReceiver(finishBroadcast, new IntentFilter("closeScanner"), 2);
+        } else {
+            registerReceiver(finishBroadcast, new IntentFilter("closeScanner"));
+        }
     }
 
     /**
